@@ -1,0 +1,75 @@
+[gd_scene load_steps=9 format=3 uid="uid://c4laaagvdft0m"]
+
+[ext_resource type="Script" path="res://scripts/Inimigo.gd" id="1_o7xyy"]
+[ext_resource type="Texture2D" uid="uid://337sryxgfowv" path="res://assets/0x72_DungeonTilesetII_v1.7/frames/muddy_anim_f0.png" id="2_cy45o"]
+[ext_resource type="Texture2D" uid="uid://c2fu7w2suq38p" path="res://assets/0x72_DungeonTilesetII_v1.7/frames/muddy_anim_f1.png" id="3_dt5fm"]
+[ext_resource type="Texture2D" uid="uid://cby7f3cnl2tvj" path="res://assets/0x72_DungeonTilesetII_v1.7/frames/muddy_anim_f2.png" id="4_ynndj"]
+[ext_resource type="Texture2D" uid="uid://chb808papkkld" path="res://assets/0x72_DungeonTilesetII_v1.7/frames/muddy_anim_f3.png" id="5_sk4g8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_17jd7"]
+size = Vector2(21, 25)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i41hk"]
+radius = 218.305
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qqtrm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_cy45o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_dt5fm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ynndj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_sk4g8")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_cy45o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_dt5fm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ynndj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_sk4g8")
+}],
+"loop": true,
+"name": &"run",
+"speed": 8.0
+}]
+
+[node name="Enemy" type="CharacterBody2D" groups=["inimigo"]]
+script = ExtResource("1_o7xyy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 4.5)
+shape = SubResource("RectangleShape2D_17jd7")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 4)
+shape = SubResource("CircleShape2D_i41hk")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_qqtrm")
+animation = &"run"
+frame_progress = 0.0622259
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,0 +1,79 @@
+[gd_scene load_steps=13 format=3 uid="uid://bdhteqqlgkejn"]
+
+[ext_resource type="Script" path="res://scripts/Inimigo.gd" id="1_fryd1"]
+[ext_resource type="Texture2D" uid="uid://fnfmfbqjpwm8" path="res://assets/0x72_DungeonTilesetII_v1.7/frames/masked_orc_idle_anim_f0.png" id="2_4r2kg"]
+[ext_resource type="Texture2D" uid="uid://c3mltkanckqwn" path="res://assets/0x72_DungeonTilesetII_v1.7/frames/masked_orc_idle_anim_f1.png" id="3_iw5m1"]
+[ext_resource type="Texture2D" uid="uid://crco4mq8g2eiw" path="res://assets/0x72_DungeonTilesetII_v1.7/frames/masked_orc_idle_anim_f2.png" id="4_bbrmj"]
+[ext_resource type="Texture2D" uid="uid://iuiajaybwx37" path="res://assets/0x72_DungeonTilesetII_v1.7/frames/masked_orc_idle_anim_f3.png" id="5_o5fbp"]
+[ext_resource type="Texture2D" uid="uid://7q2j5bjeaq00" path="res://assets/0x72_DungeonTilesetII_v1.7/frames/masked_orc_run_anim_f0.png" id="6_c4o22"]
+[ext_resource type="Texture2D" uid="uid://8qrsd40nk013" path="res://assets/0x72_DungeonTilesetII_v1.7/frames/masked_orc_run_anim_f1.png" id="7_ofb3s"]
+[ext_resource type="Texture2D" uid="uid://b7nwlo4gmo0lr" path="res://assets/0x72_DungeonTilesetII_v1.7/frames/masked_orc_run_anim_f2.png" id="8_321hl"]
+[ext_resource type="Texture2D" uid="uid://hsglq7xwcx47" path="res://assets/0x72_DungeonTilesetII_v1.7/frames/masked_orc_run_anim_f3.png" id="9_k70fm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_17jd7"]
+size = Vector2(21, 25)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_otn26"]
+radius = 218.305
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qqtrm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_4r2kg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_iw5m1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_bbrmj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_o5fbp")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_c4o22")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_ofb3s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_321hl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_k70fm")
+}],
+"loop": true,
+"name": &"run",
+"speed": 8.0
+}]
+
+[node name="Enemy" type="CharacterBody2D" groups=["inimigo"]]
+script = ExtResource("1_fryd1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 4.5)
+shape = SubResource("RectangleShape2D_17jd7")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 4)
+shape = SubResource("CircleShape2D_otn26")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_qqtrm")
+animation = &"run"
+frame_progress = 0.551825
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

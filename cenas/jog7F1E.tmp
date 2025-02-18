@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cu6e2ne7e4stw"]
+
+[ext_resource type="Texture2D" uid="uid://chkx5fv8r3111" path="res://icon.svg" id="1_07ojf"]
+[ext_resource type="Script" path="res://cenas/jogador.gd" id="1_ihocb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2ubgt"]
+size = Vector2(131, 130)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+position = Vector2(276, 225)
+script = ExtResource("1_ihocb")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 1)
+shape = SubResource("RectangleShape2D_2ubgt")
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(0, 1)
+texture = ExtResource("1_07ojf")

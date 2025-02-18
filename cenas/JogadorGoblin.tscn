@@ -1,0 +1,106 @@
+[gd_scene load_steps=14 format=3 uid="uid://b1ubxb3gu4byj"]
+
+[ext_resource type="Script" path="res://scripts/JogadorGoblin.gd" id="1_svfio"]
+[ext_resource type="Texture2D" uid="uid://b3otc0ffr7br4" path="res://assets/0x72_DungeonTilesetII_v1.7/frames/lizard_m_idle_anim_f0.png" id="2_yu7qu"]
+[ext_resource type="Texture2D" uid="uid://boryj3oe1beiy" path="res://assets/0x72_DungeonTilesetII_v1.7/frames/lizard_m_idle_anim_f1.png" id="3_qghrv"]
+[ext_resource type="Texture2D" uid="uid://c06woygpq3pkk" path="res://assets/0x72_DungeonTilesetII_v1.7/frames/lizard_m_idle_anim_f2.png" id="4_7ohtd"]
+[ext_resource type="Texture2D" uid="uid://cpj5g6whioaay" path="res://assets/0x72_DungeonTilesetII_v1.7/frames/lizard_m_idle_anim_f3.png" id="5_162d2"]
+[ext_resource type="Texture2D" uid="uid://pwh2ggyoukgp" path="res://assets/0x72_DungeonTilesetII_v1.7/frames/lizard_m_run_anim_f0.png" id="6_a5x2v"]
+[ext_resource type="Texture2D" uid="uid://btbmn415exhyj" path="res://assets/0x72_DungeonTilesetII_v1.7/frames/lizard_m_run_anim_f1.png" id="7_m2qpb"]
+[ext_resource type="Texture2D" uid="uid://6tsgqf5prcmm" path="res://assets/0x72_DungeonTilesetII_v1.7/frames/lizard_m_run_anim_f2.png" id="8_331s4"]
+[ext_resource type="Texture2D" uid="uid://bs8tyu0tgwo44" path="res://assets/0x72_DungeonTilesetII_v1.7/frames/lizard_m_run_anim_f3.png" id="9_dm30h"]
+[ext_resource type="FontFile" uid="uid://0tdts786hjyn" path="res://Werkstatt ITC Std Regular.otf" id="10_uy5ii"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2ubgt"]
+size = Vector2(11, 12)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2ijrb"]
+radius = 59.081
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mb1xc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_yu7qu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_qghrv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_7ohtd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_162d2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_a5x2v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_m2qpb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_331s4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_dm30h")
+}],
+"loop": true,
+"name": &"run",
+"speed": 8.0
+}]
+
+[node name="jogador" type="CharacterBody2D"]
+position = Vector2(576, 323)
+script = ExtResource("1_svfio")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 2)
+shape = SubResource("RectangleShape2D_2ubgt")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-0.5, 1)
+shape = SubResource("CircleShape2D_2ijrb")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.75
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["jogador"]]
+position = Vector2(0, -6)
+sprite_frames = SubResource("SpriteFrames_mb1xc")
+animation = &"run"
+frame_progress = 0.696802
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Button" type="Button" parent="Node2D"]
+offset_left = -138.0
+offset_top = 61.0
+offset_right = -74.0
+offset_bottom = 78.0
+theme_override_colors/font_disabled_color = Color(0.403922, 0.286275, 0.156863, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.403922, 0.286275, 0.156863, 1)
+theme_override_colors/font_hover_color = Color(0.768627, 0.580392, 0.380392, 1)
+theme_override_colors/font_pressed_color = Color(0.403922, 0.286275, 0.156863, 1)
+theme_override_colors/font_focus_color = Color(0.403922, 0.286275, 0.156863, 1)
+theme_override_colors/font_color = Color(0.768627, 0.580392, 0.380392, 1)
+theme_override_colors/font_outline_color = Color(0.403922, 0.286275, 0.156863, 1)
+theme_override_fonts/font = ExtResource("10_uy5ii")
+theme_override_font_sizes/font_size = 8
+text = "PAUSE"
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="Node2D/Button" to="." method="_on_button_pressed"]
