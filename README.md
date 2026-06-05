@@ -16,3 +16,4 @@ O projeto DarkmistCity visa explorar o uso de técnicas avançadas de computaç�
 - Mundo aberto: O jogo oferece um ambiente dinâmico e expansivo, com elementos interativos que reagem às ações do jogador.
 - Sistema de combate: Jogadores podem interagir com inimigos em batalhas com mecânicas baseadas em tempo real.
 - Interface gráfica: Utiliza conceitos avançados de computação gráfica para renderizar elementos de interface com animações e efeitos visuais.
+
